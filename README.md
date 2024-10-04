@@ -1,6 +1,9 @@
-# kickstart.nvim
+# ryz.nvim
 
 My personal nvim configuration. Forked from kickstart-nvim.
+
+---
+# kickstart.nvim
 
 ## Introduction
 
