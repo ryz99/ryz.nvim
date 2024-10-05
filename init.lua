@@ -190,6 +190,36 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Personal keymaps for extra plugins
+-- Harpoon
+-- local harpoon = require 'config.plugins.harpoon'
+
+-- harpoon:setup()
+
+-- [A]dd current file to bottom of list
+-- vim.keymap.set('n', '<leader>a', function()
+--  harpoon:list():add()
+-- end)
+
+-- Toggle the harpoon quick menu
+-- vim.keymap.set('n', '<C-e>', function()
+--   harpoon.ui:toggle_quick_menu(harpoon:list())
+-- end)
+
+-- Quick-switch to different files in harpoon ([H]arpoon [T]hat [N]aughty [S]ailor)
+-- vim.keymap.set('n', '<C-h>', function()
+--   harpoon:list():select(1)
+-- end)
+-- vim.keymap.set('n', '<C-t>', function()
+--   harpoon:list():select(2)
+-- end)
+-- vim.keymap.set('n', '<C-n>', function()
+--   harpoon:list():select(3)
+-- end)
+-- vim.keymap.set('n', '<C-s>', function()
+--   harpoon:list():select(4)
+-- end)
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -724,6 +754,9 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'isort', 'black' },
+        html = { 'prettier' },
+        json = { 'prettier' },
+        markdown = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -977,5 +1010,9 @@ require('lazy').setup({
   },
 })
 
+require 'after.plugin.harpoon'
+require 'after.plugin.fugitive'
+require 'after.plugin.undotree'
+require 'remap'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
