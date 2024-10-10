@@ -15,6 +15,14 @@ end
 
 local extendedClientCapabilities = jdtls.extendedClientCapabilities
 
+-- Needed for debugging
+local bundles = {
+  vim.fn.glob(home .. '/.local/share/ryz-nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar'),
+}
+
+-- Needed for running/debugging unit tests
+vim.list_extend(bundles, vim.split(vim.fn.glob(home .. '/.local/share/ryz-nvim/mason/share/java-test/*.jar', 1), '\n'))
+
 local config = {
   -- The command that starts the language server
   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
@@ -34,7 +42,7 @@ local config = {
     'java.base/java.util=ALL-UNNAMED',
     '--add-opens',
     'java.base/java.lang=ALL-UNNAMED',
-
+    '-javaagent:' .. home .. '/.local/share/ryz-nvim/mason/packages/jdtls/lombok.jar',
     -- 💀
     '-jar',
     home .. '/.local/share/ryz-nvim/mason/share/jdtls/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar',
@@ -91,10 +99,10 @@ local config = {
   },
 
   -- For auto-completion (with method signatures and placeholders)
-  --capabilities = require('cmp_nvim_lsp').default_capabilities(),
-  --flags = {
-  --allow_incremental_sync = true,
-  --},
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  flags = {
+    allow_incremental_sync = true,
+  },
 
   -- Language server `initializationOptions`
   -- You need to extend the `bundles` with paths to jar files
@@ -104,9 +112,16 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {},
+    bundles = bundles,
   },
 }
+
+-- Needed for debugging
+config['on_attach'] = function(client, bufnr)
+  jdtls.setup_dap { hotcodereplace = 'auto' }
+  require('jdtls.dap').setup_dap_main_class_configs()
+end
+
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require('jdtls').start_or_attach(config)
