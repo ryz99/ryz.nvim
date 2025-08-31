@@ -7,6 +7,7 @@ return {
     'theHamsta/nvim-dap-virtual-text', -- inline variable text while debugging
     'nvim-telescope/telescope-dap.nvim',
   },
+  --source: https://github.com/bcampolo/nvim-starter-kit/tree/java
   opts = {
     controls = {
       element = 'repl',

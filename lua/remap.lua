@@ -45,6 +45,7 @@ end)
 vim.keymap.set('n', '<leader>pv', ':NvimTreeFindFileToggle<CR>')
 
 -- remaps for java debugger
+-- credit: https://github.com/bcampolo/nvim-starter-kit/tree/java
 vim.keymap.set('n', '<leader>bb', "<cmd>lua require'dap'.toggle_breakpoint()<cr>")
 vim.keymap.set('n', '<leader>bc', "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>")
 vim.keymap.set('n', '<leader>bl', "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>")
